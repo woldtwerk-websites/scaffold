@@ -8,6 +8,11 @@ description: Additional instructions for working with drupal.
 ## Development
 
 - always use oop hooks instead of hooks in .module and .theme
+- don't write helper code that an installed library already has. before writing parsing, path, string, array, url, date or file helpers, check:
+  - drupal's utilities: `Drupal\Component\Utility` (`NestedArray`, `UrlHelper`, `Html`, `Xss`, `Crypt`, `Unicode`, `SortArray`, …), `Drupal\Component\Datetime` / `Drupal\Core\Datetime`, and core services (`file_system`, `datetime.time`, `path.validator`, …).
+  - the symfony components and other libraries already in `vendor/` (`ls vendor/symfony`, `ddev composer show`), e.g. `Symfony\Component\Finder\Glob::toRegex()` for globs, `Symfony\Component\Filesystem\Path` for path handling, `symfony/string`, `symfony/process`, `symfony/yaml`.
+  - contrib modules in `web/modules/contrib` and `composer.json`.
+  a package that is only installed as a dependency of another one may be used: declare it in the custom module's `composer.json`, not in the root `composer.json`. ask before adding a package that isn't installed yet. if you still write it yourself, say why.
 - custom modules use the `workspace_` prefix: machine name, directory, file names and namespace (`web/modules/custom/workspace_foo`, `workspace_foo.info.yml`, `Drupal\workspace_foo`). a module's `composer.json` is named `workspace/workspace_foo`.
 - a custom module's or theme's `composer.json` always has a `repositories` key with `{"type": "composer", "url": "https://packages.drupal.org/8"}`. composer ignores it in non-root packages, but renovate scans these files on their own and can't look up `drupal/*` dependencies without it. a renovate pr there only bumps the constraint; update the root lock with `ddev composer update workspace/workspace_foo <package> -W`.
 

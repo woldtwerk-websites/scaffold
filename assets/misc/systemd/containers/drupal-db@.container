@@ -1,0 +1,24 @@
+[Unit]
+Description=Drupal MariaDB (%i)
+Wants=network-online.target
+After=network-online.target
+Requires=drupal-db-volume@%i.service drupal-tmp-volume@%i.service
+After=drupal-db-volume@%i.service drupal-tmp-volume@%i.service
+
+[Container]
+Image=docker.io/library/mariadb:12@sha256:d46e102fa8b9b72bfcdeb56f9dd538742092119dc8b11f31fe662605cd234cd9
+ContainerName=%i__db
+Pod=drupal@.pod
+EnvironmentFile=%h/.config/%i/.env
+Environment=MARIADB_AUTO_UPGRADE=1
+Volume=%i__db:/var/lib/mysql
+Volume=%i__tmp:/tmp:z
+# The pod is on the proxy network, so MariaDB only listens on localhost.
+Exec=--transaction-isolation=READ-COMMITTED --bind-address=127.0.0.1
+Label=io.containers.autoupdate=registry
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

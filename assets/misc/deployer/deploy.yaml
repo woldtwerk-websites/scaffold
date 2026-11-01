@@ -1,0 +1,52 @@
+import:
+  - misc/deployer/rsync.php
+
+config:
+  default_timeout: 600
+  keep_releases: 3
+  cleanup_use_sudo: true
+  shared_files:
+    - web/sites/default/settings.local.php
+  shared_dirs:
+    - web/sites/default/files
+    - private
+
+hosts:
+  production:
+    deploy_path: /home/woldtwerk/apps/{{application}}
+    hostname: woldtwerk.de
+    remote_user: woldtwerk
+
+tasks:
+  # The app resolves its working directory through the `current` symlink at
+  # start-up, so it is restarted before the update runs against the new release.
+  drupal:deploy:
+    - run: systemctl --user restart drupal-app@{{application}}
+    - run: podman exec -w /www/current {{application}}__app misc/hooks/post-update.sh
+
+  # Maintenance mode is database state rather than file state, so the currently
+  # running release can switch it on for the release that has just been
+  # uploaded. The guard tests for the drush binary rather than for the release
+  # itself, which covers two cases: on a first deploy there is no current
+  # release at all, and the release that was live before this change predates
+  # drush/drush moving out of require-dev, so it has no vendor/bin/drush.
+  drupal:maint:on:
+    - run: '[ ! -e {{current_path}}/vendor/bin/drush ] || podman exec -w /www/current {{application}}__app vendor/bin/drush maint:set 1 --yes'
+
+  # Same guard, because on a first deploy this also runs from deploy:failed,
+  # which can happen before `current` and its drush exist.
+  drupal:maint:off:
+    - run: '[ ! -e {{current_path}}/vendor/bin/drush ] || podman exec -w /www/current {{application}}__app vendor/bin/drush maint:set 0 --yes'
+
+# Maintenance mode starts right before the symlink flips, so the rsync upload
+# of the new release does not count towards downtime; only the switch over and
+# the database updates behind it are covered by the maintenance page.
+before:
+  deploy:symlink: drupal:maint:on
+
+after:
+  deploy:symlink: drupal:deploy
+  drupal:deploy: drupal:maint:off
+  # A failed deploy must not leave the site behind the maintenance page, so the
+  # same task runs on the failure path as well.
+  deploy:failed: drupal:maint:off

@@ -137,6 +137,30 @@
                     "path": "assets/jsconfig.json",
                     "overwrite": true
                 },
+                "[project-root]/misc/ai/skills/drupal/SKILL.md": {
+                    "path": "assets/misc/ai/skills/drupal/SKILL.md",
+                    "overwrite": true
+                },
+                "[project-root]/misc/deployer/deploy.yaml": {
+                    "path": "assets/misc/deployer/deploy.yaml",
+                    "overwrite": true
+                },
+                "[project-root]/misc/deployer/rsync.php": {
+                    "path": "assets/misc/deployer/rsync.php",
+                    "overwrite": true
+                },
+                "[project-root]/misc/hooks/post-update.sh": {
+                    "path": "assets/misc/hooks/post-update.sh",
+                    "overwrite": true
+                },
+                "[project-root]/misc/hooks/pre-update.sh": {
+                    "path": "assets/misc/hooks/pre-update.sh",
+                    "overwrite": true
+                },
+                "[project-root]/misc/hooks/warm-cache.sh": {
+                    "path": "assets/misc/hooks/warm-cache.sh",
+                    "overwrite": true
+                },
                 "[project-root]/misc/snapshot/ci-snapshot-dispatch.sh": {
                     "path": "assets/misc/snapshot/ci-snapshot-dispatch.sh",
                     "overwrite": true
@@ -147,6 +171,42 @@
                 },
                 "[project-root]/misc/snapshot/sanitize.sql": {
                     "path": "assets/misc/snapshot/sanitize.sql",
+                    "overwrite": true
+                },
+                "[project-root]/misc/systemd/containers/README.md": {
+                    "path": "assets/misc/systemd/containers/README.md",
+                    "overwrite": true
+                },
+                "[project-root]/misc/systemd/containers/drupal-app@.container": {
+                    "path": "assets/misc/systemd/containers/drupal-app@.container",
+                    "overwrite": true
+                },
+                "[project-root]/misc/systemd/containers/drupal-db@.container": {
+                    "path": "assets/misc/systemd/containers/drupal-db@.container",
+                    "overwrite": true
+                },
+                "[project-root]/misc/systemd/containers/drupal-db@.volume": {
+                    "path": "assets/misc/systemd/containers/drupal-db@.volume",
+                    "overwrite": true
+                },
+                "[project-root]/misc/systemd/containers/drupal-tmp@.volume": {
+                    "path": "assets/misc/systemd/containers/drupal-tmp@.volume",
+                    "overwrite": true
+                },
+                "[project-root]/misc/systemd/containers/drupal@.pod": {
+                    "path": "assets/misc/systemd/containers/drupal@.pod",
+                    "overwrite": true
+                },
+                "[project-root]/misc/systemd/containers/env.example": {
+                    "path": "assets/misc/systemd/containers/env.example",
+                    "overwrite": true
+                },
+                "[project-root]/misc/systemd/user/drupal-cron@.service": {
+                    "path": "assets/misc/systemd/user/drupal-cron@.service",
+                    "overwrite": true
+                },
+                "[project-root]/misc/systemd/user/drupal-cron@.timer": {
+                    "path": "assets/misc/systemd/user/drupal-cron@.timer",
                     "overwrite": true
                 },
                 "[project-root]/package.json": {
@@ -164,6 +224,10 @@
                 "[project-root]/pnpm-workspace.yaml": {
                     "path": "assets/pnpm-workspace.yaml",
                     "overwrite": false
+                },
+                "[project-root]/private/.gitkeep": {
+                    "path": "assets/private/.gitkeep",
+                    "overwrite": true
                 },
                 "[project-root]/renovate.json": {
                     "path": "assets/renovate.json",

@@ -1,5 +1,7 @@
 {
-    "name": "workspace/scaffold",
+    "name": "woldtwerk-websites/scaffold",
+    "description": "Shared Drupal scaffold files for the woldtwerk-websites sites: DDEV, Vite+, CI workflows, tooling config",
+    "type": "library",
     "extra": {
         "drupal-scaffold": {
             "file-mapping": {

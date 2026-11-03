@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/woldtwerk-websites/scaffold/compare/v1.1.0...v1.2.0) (2026-11-03)
+
+
+### Features
+
+* :sparkles: update drupal skill ([a234d42](https://github.com/woldtwerk-websites/scaffold/commit/a234d42dc627fd699dfd2d61d010e54badebf7fb))
+
 ## [1.1.0](https://github.com/woldtwerk-websites/scaffold/compare/v1.0.0...v1.1.0) (2026-11-01)
 
 

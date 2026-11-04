@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/woldtwerk-websites/scaffold/compare/v1.2.0...v1.3.0) (2026-11-04)
+
+
+### Features
+
+* :sparkles: scaffold the AGENTS.md agent guidance ([f8e7482](https://github.com/woldtwerk-websites/scaffold/commit/f8e7482ec71faf05de39ad5cb31c3cc00f7cfc74))
+
 ## [1.2.0](https://github.com/woldtwerk-websites/scaffold/compare/v1.1.0...v1.2.0) (2026-11-03)
 
 

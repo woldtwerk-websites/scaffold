@@ -49,6 +49,25 @@ themselves are kept in `assets/`, mirroring the paths they are copied to in the
 site (for example `assets/.ddev/config.vite.yml` becomes
 `[project-root]/.ddev/config.vite.yml`).
 
+## Deploy approval
+
+Renovate updates deploy on their own when every new commit came through a
+Renovate pull request. Commits that did not (human commits, merge and rebase
+merges) always wait for the `production` environment approval.
+
+The `AUTO_DEPLOY` repository variable narrows the automatic deploys down:
+
+| Value | Behaviour |
+| --- | --- |
+| unset, `all` | Deploy automatically when every new commit is a Renovate update. |
+| `security` | Only for Renovate security updates (PR label `security`) and Renovate updates that change no runtime files. |
+| `none` | Always wait for approval. |
+| anything else | Treated as `none`, with a warning in the log. |
+
+```bash
+gh variable set AUTO_DEPLOY --body security
+```
+
 ## Releases
 
 Releases are cut by [release-please](https://github.com/googleapis/release-please)

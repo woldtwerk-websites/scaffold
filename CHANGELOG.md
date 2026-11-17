@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/woldtwerk-websites/scaffold/compare/v1.3.0...v1.4.0) (2026-11-17)
+
+
+### Features
+
+* :sparkles: deploy Renovate updates without approval ([d17df82](https://github.com/woldtwerk-websites/scaffold/commit/d17df8297d6b9c09050a721c178bce1a309a17e1))
+
 ## [1.3.0](https://github.com/woldtwerk-websites/scaffold/compare/v1.2.0...v1.3.0) (2026-11-04)
 
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/woldtwerk-websites/scaffold/compare/v1.4.0...v1.4.1) (2026-11-18)
+
+
+### Performance Improvements
+
+* :zap: check runtime changes before CI in promote workflow and fast-track Drupal patches ([99255fa](https://github.com/woldtwerk-websites/scaffold/commit/99255faa8670d77a1ca34c9189cdd498a8450a2f))
+
 ## [1.4.0](https://github.com/woldtwerk-websites/scaffold/compare/v1.3.0...v1.4.0) (2026-11-17)
 
 

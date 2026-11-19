@@ -1,0 +1,55 @@
+name: Fetch scrubbed production database
+description: >-
+  Fetches the scrubbed production dump from the shared SSH endpoint and exports
+  CI_DB_DUMP pointing at the gzipped SQL file. Without a host or credentials it
+  does nothing, so callers fall back to a fresh site install. The dump stays in
+  RUNNER_TEMP: never an artifact, cache or log line.
+
+inputs:
+  host:
+    description: SSH destination (user@host) of the shared dump endpoint; it receives the repository name as SSH_ORIGINAL_COMMAND and prints a gzipped SQL dump. Empty = skip
+    type: string
+    required: false
+    default: ""
+  known-hosts:
+    description: known_hosts line(s) for host
+    type: string
+    required: false
+    default: ""
+  ssh-key:
+    description: Private SSH key for host (empty on fork PRs = skip)
+    type: string
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      env:
+        DB_SSH_HOST: ${{ inputs.host }}
+        DB_SSH_KNOWN_HOSTS: ${{ inputs.known-hosts }}
+        DB_SNAPSHOT_KEY: ${{ inputs.ssh-key }}
+      run: |
+        set -euo pipefail
+        # Without a host or credentials, callers install a fresh site.
+        if [ -z "$DB_SSH_HOST" ] || [ -z "$DB_SNAPSHOT_KEY" ] || [ -z "$DB_SSH_KNOWN_HOSTS" ]; then
+          echo "::notice::No database snapshot host or credentials; installing a fresh site instead."
+          exit 0
+        fi
+        umask 077
+        key="$RUNNER_TEMP/db-snapshot-key"
+        known_hosts="$RUNNER_TEMP/db-snapshot-known-hosts"
+        dump="$RUNNER_TEMP/db.sql.gz"
+        trap 'rm -f "$key" "$known_hosts"' EXIT
+        printf '%s\n' "$DB_SNAPSHOT_KEY" > "$key"
+        printf '%s\n' "$DB_SSH_KNOWN_HOSTS" > "$known_hosts"
+        # The key's authorized_keys entry forces ci-snapshot-dispatch, which reads the
+        # project name from this SSH command. By convention that name equals the
+        # project's Deployer directory under ~/apps. GITHUB_REPOSITORY is the calling
+        # project's repository, which is what the endpoint dispatches on.
+        ssh -i "$key" -o IdentitiesOnly=yes -o BatchMode=yes -o ConnectTimeout=30 \
+          -o UserKnownHostsFile="$known_hosts" -o StrictHostKeyChecking=yes \
+          "$DB_SSH_HOST" "${GITHUB_REPOSITORY#*/}" > "$dump" < /dev/null
+        gzip -t "$dump"
+        echo "CI_DB_DUMP=$dump" >> "$GITHUB_ENV"

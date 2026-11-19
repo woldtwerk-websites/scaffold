@@ -12,7 +12,6 @@ jobs:
   drupal:
     uses: ./.github/workflows/drupal-ci.yml
     with:
-      build-script: typecheck
       # Post-start hooks and extra packages not needed in CI.
       ddev-skip-configs: config.ai.yaml config.ffmpeg.yaml config.vite.yml config.vite-devtools.yaml
       # Without the host or the DB_SNAPSHOT_KEY secret, the reusable workflow

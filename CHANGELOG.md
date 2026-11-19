@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.6.0](https://github.com/woldtwerk-websites/scaffold/compare/v1.5.0...v1.6.0) (2026-11-19)
+
+
+### Features
+
+* add db-snapshot composite action for the scrubbed production dump ([b41e573](https://github.com/woldtwerk-websites/scaffold/commit/b41e57369edcaf041f3ebee96528f1c238a328ec))
+* alias build to typecheck so the shared CI default works ([53e5144](https://github.com/woldtwerk-websites/scaffold/commit/53e5144cd2c5b06c44069842efef0539f30d4164))
+* move the Drupal CI reusable workflow here from renovate-config ([cb3ed3a](https://github.com/woldtwerk-websites/scaffold/commit/cb3ed3a6e50c5602e108f9bb8bf4cfd90885568c))
+* point scaffold CI assets at the moved Drupal CI workflow ([c35ea96](https://github.com/woldtwerk-websites/scaffold/commit/c35ea9680ce6df33240a06aeef15b28b15edb51f))
+
+
+### Bug Fixes
+
+* port the upstream CI speed-ups lost in the workflow move ([7bd9b6f](https://github.com/woldtwerk-websites/scaffold/commit/7bd9b6f46b3cbb2037e78cbfd13dcf45c4d25d29))
+
 ## [1.5.0](https://github.com/woldtwerk-websites/scaffold/compare/v1.4.1...v1.5.0) (2026-11-19)
 
 

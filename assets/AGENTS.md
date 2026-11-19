@@ -154,7 +154,7 @@ You may ask once per project which tool to use for spawning subagents. E.g. clau
 The main agent does not write code in this repo itself. The main agent plans and reviews;
 subagents write the code. You must tell the subagent, that it is a subagent!
 Spawn as much as possible (max 5) agents to work concurrently on different tasks related to the project.
-Review the code max 2 times to ensure quality and consistency. Each agent should have a clear objective 
+Review the code max 2 times to ensure quality and consistency. Each agent should have a clear objective
 and defined responsibilities.
 Every coding task goes to subagents as a plan of
 concrete todos — files, functions, behaviour, tests to add — with the research

@@ -43,7 +43,7 @@ on:
       frontend-dir:
         description: Directory containing package.json and pnpm-lock.yaml, relative to the repo root (empty = skip pnpm steps)
         type: string
-        default: "."
+        default: '.'
       build-script:
         description: package.json script for the frontend build (empty = skip)
         type: string
@@ -55,7 +55,7 @@ on:
       ddev-skip-configs:
         description: Space-separated .ddev/config.*.yaml files not needed in CI, e.g. ones with dev-only hooks
         type: string
-        default: ""
+        default: ''
       smoke-paths:
         # Not "/" by default: after site:install the CI site has no content, so
         # a node front page is a 404. A production DB import adds "/" itself.
@@ -65,11 +65,11 @@ on:
       db-ssh-host:
         description: SSH destination (user@host) of the shared dump endpoint; it receives the repository name as SSH_ORIGINAL_COMMAND and prints a gzipped SQL dump. Empty = install from config
         type: string
-        default: ""
+        default: ''
       db-ssh-known-hosts:
         description: known_hosts line(s) for db-ssh-host, passed as an input so CI does not depend on how vars reach it
         type: string
-        default: ""
+        default: ''
     secrets:
       db-snapshot-key:
         description: Private SSH key for db-ssh-host (empty on fork PRs = install from config)

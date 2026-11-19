@@ -34,7 +34,7 @@ jobs:
   ci:
     needs: changes
     if: needs.changes.outputs.promote == 'true'
-    uses: woldtwerk-websites/renovate-config/.github/workflows/drupal-ci.yml@885049df5f3cab29ad8c5c327c922659bb90295f # main
+    uses: woldtwerk-websites/scaffold/.github/workflows/drupal-ci.yml@cb3ed3a6e50c5602e108f9bb8bf4cfd90885568c # main
     with:
       build-script: typecheck
       # Post-start hooks and extra packages not needed in CI.

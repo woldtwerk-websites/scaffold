@@ -1,6 +1,6 @@
 # Reusable CI for DDEV-based Drupal projects.
 #
-# Usage in a project (.github/workflows/ci.yml):
+# Ships with the project; call it locally from .github/workflows/ci.yml:
 #
 #   on:
 #     pull_request:
@@ -8,7 +8,7 @@
 #     contents: read
 #   jobs:
 #     drupal:
-#       uses: woldtwerk-websites/scaffold/.github/workflows/drupal-ci.yml@main
+#       uses: ./.github/workflows/drupal-ci.yml
 #
 # Optional production-DB mode: install from a scrubbed production dump instead
 # of config. The shared endpoint receives the project (repository) name as

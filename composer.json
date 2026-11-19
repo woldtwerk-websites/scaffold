@@ -97,6 +97,10 @@
                     "path": "assets/.github/workflows/deploy.yml",
                     "overwrite": true
                 },
+                "[project-root]/.github/workflows/drupal-ci.yml": {
+                    "path": "assets/.github/workflows/drupal-ci.yml",
+                    "overwrite": true
+                },
                 "[project-root]/.github/workflows/opencode.yml": {
                     "path": "assets/.github/workflows/opencode.yml",
                     "overwrite": true

@@ -2,6 +2,8 @@ name: CI
 
 on:
   pull_request:
+  # Also called from promote.yml (secrets: inherit), so both share one CI configuration.
+  workflow_call:
 
 permissions:
   contents: read

@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.1](https://github.com/woldtwerk-websites/scaffold/compare/v1.6.0...v1.6.1) (2026-11-19)
+
+
+### Bug Fixes
+
+* make scaffold assets formatter-stable for project pre-commit hooks ([fe6ad20](https://github.com/woldtwerk-websites/scaffold/commit/fe6ad20b3b0959475dc11b1bb4eb493f6b11abd0))
+
 ## [1.6.0](https://github.com/woldtwerk-websites/scaffold/compare/v1.5.0...v1.6.0) (2026-11-19)
 
 

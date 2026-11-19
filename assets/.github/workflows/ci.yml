@@ -8,7 +8,7 @@ permissions:
 
 jobs:
   drupal:
-    uses: woldtwerk-websites/scaffold/.github/workflows/drupal-ci.yml@cb3ed3a6e50c5602e108f9bb8bf4cfd90885568c # main
+    uses: woldtwerk-websites/scaffold/.github/workflows/drupal-ci.yml@c35ea9680ce6df33240a06aeef15b28b15edb51f # main
     with:
       build-script: typecheck
       # Post-start hooks and extra packages not needed in CI.

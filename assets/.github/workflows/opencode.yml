@@ -1,0 +1,87 @@
+name: opencode
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  issues:
+    types: [labeled]
+  pull_request:
+    types: [labeled]
+
+jobs:
+  opencode:
+    # Labels need triage rights, so only comments check the author.
+    if: |
+      ((github.event_name == 'issues' || github.event_name == 'pull_request') &&
+       github.event.label.name == 'opencode') ||
+      ((contains(github.event.comment.body, '/oc') ||
+        contains(github.event.comment.body, '/opencode')) &&
+       contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association))
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: read
+      issues: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      # This only installs DDEV. The agent runs .github/scripts/ci-site-install.sh
+      # when its task needs a site (see AGENTS.md).
+      - uses: ddev/github-action-setup-ddev@fdf2f5c97943bae638f31df6df86f1defa6210c0 # v1.12.1
+        with:
+          autostart: false
+
+      # The repository is public, so the dump never becomes an artifact or a log
+      # line. It stays in $RUNNER_TEMP, outside the checkout, where the agent
+      # cannot commit it; `ddev import-db` reads it from there.
+      - name: Fetch scrubbed production database
+        env:
+          DB_SNAPSHOT_HOST: ${{ vars.DB_SNAPSHOT_HOST }}
+          DB_SNAPSHOT_KEY: ${{ secrets.DB_SNAPSHOT_KEY }}
+          DB_SNAPSHOT_KNOWN_HOSTS: ${{ vars.DB_SNAPSHOT_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+
+          # Without a host or credentials, ci-site-install.sh installs a fresh site.
+          if [ -z "$DB_SNAPSHOT_HOST" ] || [ -z "$DB_SNAPSHOT_KEY" ] || [ -z "$DB_SNAPSHOT_KNOWN_HOSTS" ]; then
+            echo "::notice::No database snapshot host or credentials, installing a fresh site instead."
+            exit 0
+          fi
+
+          umask 077
+          key="$RUNNER_TEMP/db-snapshot-key"
+          known_hosts="$RUNNER_TEMP/db-snapshot-known-hosts"
+          dump="$RUNNER_TEMP/db.sql.gz"
+          trap 'rm -f "$key"' EXIT
+          printf '%s\n' "$DB_SNAPSHOT_KEY" > "$key"
+          printf '%s\n' "$DB_SNAPSHOT_KNOWN_HOSTS" > "$known_hosts"
+
+          # The key's authorized_keys entry forces ci-snapshot-dispatch, which
+          # reads the project name from this SSH command. By convention that name
+          # equals the project's Deployer directory under ~/apps.
+          ssh -i "$key" -o IdentitiesOnly=yes -o BatchMode=yes -o ConnectTimeout=30 \
+            -o UserKnownHostsFile="$known_hosts" -o StrictHostKeyChecking=yes \
+            "$DB_SNAPSHOT_HOST" "${GITHUB_REPOSITORY#*/}" > "$dump" < /dev/null
+          gzip -t "$dump"
+
+          echo "CI_DB_DUMP=$dump" >> "$GITHUB_ENV"
+
+      - uses: anomalyco/opencode/github@77fc88c8ade8e5a620ebbe1197f3a572d29ae91a # latest
+        env:
+          OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
+          # Nobody can answer permission prompts in CI; a pending "ask" hangs the
+          # job silently (it waited 48 min on reading a screenshot from /tmp).
+          OPENCODE_CONFIG_CONTENT: >-
+            {"permission": {"external_directory": "allow", "doom_loop": "deny"}}
+        with:
+          model: ${{ vars.OPENCODE_MODEL }}
+          # Issues carry no comment to read instructions from; PRs default to a review.
+          prompt: >-
+            ${{ github.event_name == 'issues' && format(vars.OPENCODE_ISSUE_PROMPT, github.event.issue.title, github.event.issue.body) || '' }}

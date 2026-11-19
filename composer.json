@@ -73,6 +73,10 @@
                     "path": "assets/.ddev/web-build/pre.Dockerfile.frankenphp",
                     "overwrite": true
                 },
+                "[project-root]/.github/scripts/ci-site-install.sh": {
+                    "path": "assets/.github/scripts/ci-site-install.sh",
+                    "overwrite": true
+                },
                 "[project-root]/.github/scripts/deploy-check.sh": {
                     "path": "assets/.github/scripts/deploy-check.sh",
                     "overwrite": true
@@ -91,6 +95,10 @@
                 },
                 "[project-root]/.github/workflows/deploy.yml": {
                     "path": "assets/.github/workflows/deploy.yml",
+                    "overwrite": true
+                },
+                "[project-root]/.github/workflows/opencode.yml": {
+                    "path": "assets/.github/workflows/opencode.yml",
                     "overwrite": true
                 },
                 "[project-root]/.github/workflows/promote.yml": {

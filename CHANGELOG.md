@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.2](https://github.com/woldtwerk-websites/scaffold/compare/v1.6.1...v1.6.2) (2026-11-20)
+
+
+### Bug Fixes
+
+* limit vp test to the project's custom modules and themes ([bab58d4](https://github.com/woldtwerk-websites/scaffold/commit/bab58d4f5cb158789de493a4fa29efe09e705472))
+
 ## [1.6.1](https://github.com/woldtwerk-websites/scaffold/compare/v1.6.0...v1.6.1) (2026-11-19)
 
 

@@ -27,4 +27,8 @@ export default defineConfig({
     rules: { 'vite-plus/prefer-vite-plus-imports': 'error' },
     options: { typeAware: true, typeCheck: true },
   },
+  test: {
+    // Only this repo's own tests, not those of core, contrib or .ddev.
+    include: ['web/{modules,themes}/custom/**/*.{test,spec}.?(c|m)[jt]s?(x)'],
+  },
 });

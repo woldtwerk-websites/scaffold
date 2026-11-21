@@ -1,0 +1,37 @@
+# Cache lifetimes for static files, injected into the `common_config` snippet of
+# web-build/Caddyfile.frankenphp. These are the same directives the production
+# image ships in woldtwerk-websites/containers frankenphp-drupal/Caddyfile, which
+# explains each rule. Keep both in sync.
+services:
+  web:
+    environment:
+      CADDY_SERVER_EXTRA_DIRECTIVES: |
+        @assets_aggregated {
+          file
+          path_regexp ^/sites/[^/]+/files/(css|js)/
+        }
+        header @assets_aggregated Cache-Control "public, max-age=31536000, immutable"
+
+        @assets_versioned {
+          file
+          path_regexp ^/(core|modules|themes|libraries|profiles)/.+\.(css|js|mjs)$
+          expression `{query} != ""`
+        }
+        header @assets_versioned Cache-Control "public, max-age=31536000, immutable"
+
+        @assets_unversioned {
+          file
+          path_regexp ^/(core|modules|themes|libraries|profiles)/.+\.(css|js|mjs|map|svg|avif|webp|png|jpe?g|gif|ico|woff2?|ttf|otf)$
+          not {
+            path_regexp \.(css|js|mjs)$
+            expression `{query} != ""`
+          }
+        }
+        header @assets_unversioned Cache-Control "public, max-age=1209600"
+
+        @uploads {
+          file
+          path_regexp ^/sites/[^/]+/files/
+          not path_regexp ^/sites/[^/]+/files/(css|js)/
+        }
+        header @uploads Cache-Control "public, max-age=1209600"

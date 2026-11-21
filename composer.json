@@ -53,6 +53,10 @@
                     "path": "assets/.ddev/docker-compose.frankenphp.yaml",
                     "overwrite": true
                 },
+                "[project-root]/.ddev/docker-compose.frankenphp_extra.yaml": {
+                    "path": "assets/.ddev/docker-compose.frankenphp_extra.yaml",
+                    "overwrite": true
+                },
                 "[project-root]/.ddev/docker-compose.viteplus-cache.yaml": {
                     "path": "assets/.ddev/docker-compose.viteplus-cache.yaml",
                     "overwrite": true

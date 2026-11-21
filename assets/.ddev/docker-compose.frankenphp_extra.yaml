@@ -12,26 +12,9 @@ services:
         }
         header @assets_aggregated Cache-Control "public, max-age=31536000, immutable"
 
-        @assets_versioned {
+        @assets_static {
           file
-          path_regexp ^/(core|modules|themes|libraries|profiles)/.+\.(css|js|mjs)$
-          expression `{query} != ""`
-        }
-        header @assets_versioned Cache-Control "public, max-age=31536000, immutable"
-
-        @assets_unversioned {
-          file
-          path_regexp ^/(core|modules|themes|libraries|profiles)/.+\.(css|js|mjs|map|svg|avif|webp|png|jpe?g|gif|ico|woff2?|ttf|otf)$
-          not {
-            path_regexp \.(css|js|mjs)$
-            expression `{query} != ""`
-          }
-        }
-        header @assets_unversioned Cache-Control "public, max-age=1209600"
-
-        @uploads {
-          file
-          path_regexp ^/sites/[^/]+/files/
+          path_regexp ^/(core|modules|themes|libraries|profiles)/.+\.(css|js|mjs|map|svg|avif|webp|png|jpe?g|gif|ico|woff2?|ttf|otf)$|^/sites/[^/]+/files/
           not path_regexp ^/sites/[^/]+/files/(css|js)/
         }
-        header @uploads Cache-Control "public, max-age=1209600"
+        header @assets_static Cache-Control "public, max-age=31536000"

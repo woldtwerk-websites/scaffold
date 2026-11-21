@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.7.0](https://github.com/woldtwerk-websites/scaffold/compare/v1.6.2...v1.7.0) (2026-11-21)
+
+
+### Features
+
+* set cache lifetimes for static files served by FrankenPHP in DDEV ([8ef6ae1](https://github.com/woldtwerk-websites/scaffold/commit/8ef6ae16a7ce246132cd2a0aa8acb9379078f87b))
+
+
+### Bug Fixes
+
+* cache all static files for one year in DDEV ([bc4251f](https://github.com/woldtwerk-websites/scaffold/commit/bc4251f53ba6f2b5d2df65ef3b0e23fcd22674c2))
+
 ## [1.6.2](https://github.com/woldtwerk-websites/scaffold/compare/v1.6.1...v1.6.2) (2026-11-20)
 
 
